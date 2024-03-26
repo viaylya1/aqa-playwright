@@ -1,0 +1,22 @@
+{
+  "name": "aqa-playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": " npx playwright test --project=chromium",
+    "test:ui": " npx playwright test --ui --project=chromium",
+    "lint": "npx eslint --fix ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "module": "module",
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@types/node": "^20.11.30",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1"
+  }
+}
