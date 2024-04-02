@@ -28,6 +28,8 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'comma-dangle': ['error', 'never'],
     'import/extensions': 'off',
-    'arrow-parens': ['error', 'always']
+    'arrow-parens': ['error', 'always'],
+    'no-restricted-syntax': 'off',
+    'no-await-in-loop': 'off'
   }
 };
