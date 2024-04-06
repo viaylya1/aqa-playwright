@@ -30,6 +30,8 @@ module.exports = {
     'import/extensions': 'off',
     'arrow-parens': ['error', 'always'],
     'no-restricted-syntax': 'off',
-    'no-await-in-loop': 'off'
+    'no-await-in-loop': 'off',
+    'linebreak-style': 'off',
+    'import/prefer-default-export': 'off'
   }
 };
