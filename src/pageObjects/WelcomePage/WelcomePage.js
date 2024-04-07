@@ -13,10 +13,6 @@ export default class WelcomePage extends BasePage {
     this.signUpBtn = page.locator(this._signUpBtnSelector);
   }
 
-  async navigate() {
-    await this._page.goto('');
-  }
-
   async openSignUpPopup() {
     await this.signUpBtn.click();
     return new SignUpPopup(this._page);

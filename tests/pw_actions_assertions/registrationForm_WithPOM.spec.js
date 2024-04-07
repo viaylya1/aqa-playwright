@@ -34,7 +34,7 @@ test.describe('Auth', () => {
         }
       }
 
-      await expect(signUpPopup.invalidField).toBeHidden();
+      await expect(signUpPopup.invalidFields).toBeHidden();
       await expect(signUpPopup.container).toHaveScreenshot('Sign up popup.png');
 
       garagePage = await signUpPopup.register();
@@ -43,9 +43,11 @@ test.describe('Auth', () => {
     });
 
     test.afterEach(async ({ page }) => {
-      await garagePage.openRemovePopup();
-      await expect(garagePage.removePopup).toBeVisible();
-      await garagePage.removeBtn.click();
+      const navBar = await garagePage.accessToNavBar();
+      const settingsPage = await navBar.openSettingsPage();
+      const removePopup = await settingsPage.openRemovePopup();
+      await expect(removePopup.container).toBeVisible();
+      await removePopup.removeBtn.click();
       await expect(page).toHaveURL('');
       await expect(welcomePage.content).toBeVisible();
     });
@@ -59,7 +61,7 @@ test.describe('Auth', () => {
         await test.step('Empty "Name" value should give an error', async () => {
           await signUpPopup.nameField.focus();
           await signUpPopup.nameField.blur();
-          await expect(signUpPopup.invalidField).toHaveText('Name required');
+          await expect(signUpPopup.nameErrorMessage).toHaveText('Name required');
           await expect(signUpPopup.container).toHaveScreenshot('Name required.png');
           await expect(signUpPopup.registerBtn).toBeDisabled();
         });
@@ -70,11 +72,11 @@ test.describe('Auth', () => {
             await expect(signUpPopup.nameField, `Filled in value should be '${value}'`).toHaveValue(value);
 
             if (fieldName === 'shortValue' || fieldName === 'longValue') {
-              await expect(signUpPopup.invalidField).toHaveText('Name has to be from 2 to 20 characters long');
+              await expect(signUpPopup.nameErrorMessage).toHaveText('Name has to be from 2 to 20 characters long');
             } else if (fieldName === 'LongInvalidValue') {
-              await expect(signUpPopup.invalidField).toHaveText(/Name is invalid.*Name has to be from 2 to 20 characters long/);
+              await expect(signUpPopup.nameErrorMessage).toHaveText(/Name is invalid.*Name has to be from 2 to 20 characters long/);
             } else {
-              await expect(signUpPopup.invalidField).toHaveText('Name is invalid');
+              await expect(signUpPopup.nameErrorMessage).toHaveText('Name is invalid');
             }
             await expect(signUpPopup.registerBtn).toBeDisabled();
             await signUpPopup.nameField.clear();
@@ -82,7 +84,7 @@ test.describe('Auth', () => {
         });
 
         await test.step('"Name" input field should have red border in case of error', async () => {
-          await expect(signUpPopup.invalidField).toHaveCSS('border-color', 'rgb(220, 53, 69)');
+          await expect(signUpPopup.nameErrorMessage).toHaveCSS('border-color', 'rgb(220, 53, 69)');
         });
       });
     });
@@ -92,7 +94,7 @@ test.describe('Auth', () => {
         await test.step('Empty "Last name" value should give an error', async () => {
           await signUpPopup.lastNameField.focus();
           await signUpPopup.lastNameField.blur();
-          await expect(signUpPopup.invalidField).toHaveText('Last name required');
+          await expect(signUpPopup.lastNameErrorMessage).toHaveText('Last name required');
           await expect(signUpPopup.registerBtn).toBeDisabled();
         });
 
@@ -102,12 +104,12 @@ test.describe('Auth', () => {
             await expect(signUpPopup.lastNameField, `Filled in value should be '${value}'`).toHaveValue(value);
 
             if (fieldName === 'shortValue' || fieldName === 'longValue') {
-              await expect(signUpPopup.invalidField).toHaveText('Last name has to be from 2 to 20 characters long');
+              await expect(signUpPopup.lastNameErrorMessage).toHaveText('Last name has to be from 2 to 20 characters long');
             } else if (fieldName === 'LongInvalidValue') {
-              await expect(signUpPopup.invalidField).toHaveText(/Last name is invalid.*Last name has to be from 2 to 20 characters long/);
+              await expect(signUpPopup.lastNameErrorMessage).toHaveText(/Last name is invalid.*Last name has to be from 2 to 20 characters long/);
               await expect(signUpPopup.container).toHaveScreenshot('Invalid and long Last name.png');
             } else {
-              await expect(signUpPopup.invalidField).toHaveText('Last name is invalid');
+              await expect(signUpPopup.lastNameErrorMessage).toHaveText('Last name is invalid');
             }
             await expect(signUpPopup.registerBtn).toBeDisabled();
             await signUpPopup.lastNameField.clear();
@@ -115,7 +117,7 @@ test.describe('Auth', () => {
         });
 
         await test.step('"Last Name" input field should have red border in case of error', async () => {
-          await expect(signUpPopup.invalidField).toHaveCSS('border-color', 'rgb(220, 53, 69)');
+          await expect(signUpPopup.lastNameErrorMessage).toHaveCSS('border-color', 'rgb(220, 53, 69)');
         });
       });
     });
@@ -125,7 +127,7 @@ test.describe('Auth', () => {
         await test.step('Empty "Email" value should give an error', async () => {
           await signUpPopup.emailField.focus();
           await signUpPopup.emailField.blur();
-          await expect(signUpPopup.invalidField).toHaveText('Email required');
+          await expect(signUpPopup.emailErrorMessage).toHaveText('Email required');
           await expect(signUpPopup.registerBtn).toBeDisabled();
         });
 
@@ -134,7 +136,7 @@ test.describe('Auth', () => {
             await signUpPopup.emailField.fill(value);
             await expect(signUpPopup.emailField, `Filled in value should be '${value}'`).toHaveValue(value);
 
-            await expect(signUpPopup.invalidField).toHaveText('Email is incorrect');
+            await expect(signUpPopup.emailErrorMessage).toHaveText('Email is incorrect');
             if (fieldName === 'invalidValue7') {
               await expect(signUpPopup.container).toHaveScreenshot('Incorrect Email.png');
             }
@@ -145,7 +147,7 @@ test.describe('Auth', () => {
         });
 
         await test.step('"Email" input field should have red border in case of error', async () => {
-          await expect(signUpPopup.invalidField).toHaveCSS('border-color', 'rgb(220, 53, 69)');
+          await expect(signUpPopup.emailErrorMessage).toHaveCSS('border-color', 'rgb(220, 53, 69)');
         });
       });
     });
@@ -155,7 +157,7 @@ test.describe('Auth', () => {
         await test.step('Empty "Password" value should give an error', async () => {
           await signUpPopup.passwordField.focus();
           await signUpPopup.passwordField.blur();
-          await expect(signUpPopup.invalidField).toHaveText('Password required');
+          await expect(signUpPopup.passwordErrorMessage).toHaveText('Password required');
           await expect(signUpPopup.registerBtn).toBeDisabled();
         });
 
@@ -164,7 +166,7 @@ test.describe('Auth', () => {
             await signUpPopup.passwordField.fill(value);
             await expect(signUpPopup.passwordField, `Filled in value should be '${value}'`).toHaveValue(value);
 
-            await expect(signUpPopup.invalidField).toHaveText('Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter');
+            await expect(signUpPopup.passwordErrorMessage).toHaveText('Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter');
             if (fieldName === 'longValue') {
               await expect(signUpPopup.container).toHaveScreenshot('Invalid password.png');
             }
@@ -175,7 +177,7 @@ test.describe('Auth', () => {
         });
 
         await test.step('"Password" input field should have red border in case of error', async () => {
-          await expect(signUpPopup.invalidField).toHaveCSS('border-color', 'rgb(220, 53, 69)');
+          await expect(signUpPopup.passwordErrorMessage).toHaveCSS('border-color', 'rgb(220, 53, 69)');
         });
       });
     });
@@ -185,7 +187,7 @@ test.describe('Auth', () => {
         await test.step('Empty "Re-enter password" value should give an error', async () => {
           await signUpPopup.repeatPasswordField.focus();
           await signUpPopup.repeatPasswordField.blur();
-          await expect(signUpPopup.invalidField).toHaveText('Re-enter password required');
+          await expect(signUpPopup.repeatPasswordErrorMessage).toHaveText('Re-enter password required');
           await expect(signUpPopup.registerBtn).toBeDisabled();
         });
 
@@ -195,10 +197,10 @@ test.describe('Auth', () => {
             await expect(signUpPopup.repeatPasswordField, `Filled in value should be '${value}'`).toHaveValue(value);
 
             if (fieldName === 'noMatch') {
-              await expect(signUpPopup.invalidField).toHaveText('Passwords do not match');
+              await expect(signUpPopup.repeatPasswordErrorMessage).toHaveText('Passwords do not match');
               await expect(signUpPopup.container).toHaveScreenshot('No match password.png');
             } else {
-              await expect(signUpPopup.invalidField).toHaveText('Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter');
+              await expect(signUpPopup.repeatPasswordErrorMessage).toHaveText('Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter');
             }
 
             await expect(signUpPopup.registerBtn).toBeDisabled();
@@ -207,7 +209,7 @@ test.describe('Auth', () => {
         });
 
         await test.step('"Re-enter password" input field should have red border in case of error', async () => {
-          await expect(signUpPopup.invalidField).toHaveCSS('border-color', 'rgb(220, 53, 69)');
+          await expect(signUpPopup.repeatPasswordErrorMessage).toHaveCSS('border-color', 'rgb(220, 53, 69)');
         });
       });
     });
