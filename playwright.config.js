@@ -1,12 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
-// @ts-check
+// @ts-nocheck
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+import testConfig from './config/config';
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// require('dotenv').config();
+dotenv.config();
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -27,11 +29,8 @@ const config = defineConfig({
   use: {
     headless: false,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'https://qauto.forstudy.space/',
-    httpCredentials: {
-      username: 'guest',
-      password: 'welcome2qauto'
-    },
+    baseURL: testConfig.baseUrl,
+    httpCredentials: testConfig.httpCredentials,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
