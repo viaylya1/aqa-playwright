@@ -12,6 +12,6 @@ loggedAsAqa.describe('Mock Profile name', () => {
 
     const profilePage = await navBar.openProfilePage();
 
-    await expect(profilePage.profileNameContainer).toHaveText('Test Name');
+    await expect(profilePage.profileNameContainer).toHaveText(`${PROFILE_NAME_MOCK_RESPONSE.data.name} ${PROFILE_NAME_MOCK_RESPONSE.data.lastName}`);
   });
 });
