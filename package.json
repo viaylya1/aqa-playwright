@@ -6,6 +6,7 @@
   "scripts": {
     "test": " npx playwright test --project=chromium",
     "test:ui": " npx playwright test --ui --project=chromium",
+    "test:api": "npx playwright test --project=\"API tests\"",
     "lint": "npx eslint --fix ."
   },
   "keywords": [],
