@@ -1,9 +1,9 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { signupData } from '../../src/signUp_testData/positiveSignUpData';
+import { signupData } from '../../src/testData/positiveSignUpData';
 import {
   testNameData, testLastNameData, testEmailData, testPasswordData, testRepeatPasswordData
-} from '../../src/signUp_testData/negativeSignUpData';
+} from '../../src/testData/negativeSignUpData';
 
 test.describe('Auth', () => {
 // Positive cases

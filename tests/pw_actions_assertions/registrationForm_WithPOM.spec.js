@@ -1,9 +1,9 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { signupDataPom } from '../../src/signUp_testData/positiveSignUpData.js';
+import { signupDataPom } from '../../src/testData/positiveSignUpData.js';
 import {
   testNameData, testLastNameData, testEmailData, testPasswordData, testRepeatPasswordData
-} from '../../src/signUp_testData/negativeSignUpData.js';
+} from '../../src/testData/negativeSignUpData.js';
 import WelcomePage from '../../src/pageObjects/WelcomePage/WelcomePage.js';
 
 test.describe('Auth', () => {
