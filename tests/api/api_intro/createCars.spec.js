@@ -3,12 +3,12 @@ import { MODELS } from '../../../src/testData/models.js';
 import { BRANDS } from '../../../src/testData/brands.js';
 import { WRONG_DATA } from '../../../src/testData/negativeCarsCreationData.js';
 
-loggedAsAqa.describe('Cars API', () => {
+loggedAsAqa.describe('Cars API cases', () => {
   loggedAsAqa.describe('Create cars positive cases', () => {
     const createdCarIds = [];
     loggedAsAqa('create car', async ({ request }) => {
-      for (const brandKey of Object.keys(BRANDS)) {
-        const brand = BRANDS[brandKey];
+      for (const brandName of Object.keys(BRANDS)) {
+        const brand = BRANDS[brandName];
         for (const model of Object.values(MODELS[brand.id])) {
           await loggedAsAqa.step(`Create car with brand "${brand.title}" and model ${model.title}`, async () => {
             const requestBody = {
@@ -52,7 +52,7 @@ loggedAsAqa.describe('Cars API', () => {
 
   loggedAsAqa.describe('Create cars negative cases', () => {
     for (const testCase of WRONG_DATA) {
-      loggedAsAqa(`create car with ${testCase.name}`, async ({ request }) => {
+      loggedAsAqa(`create a car with ${testCase.name}`, async ({ request }) => {
         const brand = Object.values(BRANDS)[0];
         const model = Object.values(MODELS[brand.id])[0];
         const response = await request.post('/api/cars', {
