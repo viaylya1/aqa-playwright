@@ -2,6 +2,7 @@ import { test as base, expect as baseExpect, request as baseRequest } from '@pla
 import WelcomePage from '../pageObjects/WelcomePage/WelcomePage.js';
 import GaragePage from '../pageObjects/UserPage/GaragePage.js';
 import { AQA_STORAGE_STATE_PATH } from '../constants.js';
+import APIClient from '../client/APIClient.js';
 
 export const expect = baseExpect;
 export const request = baseRequest;
@@ -18,6 +19,10 @@ export const loggedAsAqa = base.extend({
     await use(req);
 
     await req.dispose();
+  },
+  apiNewUser: async ({}, use) => {
+    const client = await APIClient.authenticateWithNewUser('');
+    await use(client);
   },
   page: async ({ browser }, use) => {
     const ctx = await browser.newContext({
