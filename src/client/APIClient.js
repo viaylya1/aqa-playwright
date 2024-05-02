@@ -1,28 +1,26 @@
 import { request } from '@playwright/test';
-import CarController from '../controllers/CarsContoller.js';
+import CarController from '../controllers/CarsController.js';
 import AuthController from '../controllers/AuthController.js';
+import UserController from '../controllers/UserController.js';
 
 export default class APIClient {
-  constructor(request) {
-    this.auth = new AuthController(request);
-    this.cars = new CarController(request);
+  constructor(APIrequest) {
+    this.auth = new AuthController(APIrequest);
+    this.cars = new CarController(APIrequest);
+    this.user = new UserController(APIrequest);
   }
 
-  static async authenticateWithNewUser(registerData) {
-    const client = request.newContext();
+  static async authenticateWithNewUser(signUpData) {
+    const client = await request.newContext();
     const authController = new AuthController(client);
-    await authController.signUp(registerData);
-    // await authController.signIn({email: registerData.email, password: registerData.password})
+    await authController.signUp(signUpData);
     return new APIClient(client);
   }
 
   static async authenticate(userData) {
-    const client = request.newContext();
+    const client = await request.newContext();
     const authController = new AuthController(client);
     await authController.signIn(userData);
     return new APIClient(client);
   }
 }
-
-// const apiClient = await APIClient.authenticate({email: "", password: ""})
-// await apiClient.cars.createCar()

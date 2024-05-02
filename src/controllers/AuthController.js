@@ -1,12 +1,12 @@
 import BaseController from './BaseController.js';
 
 export default class AuthController extends BaseController {
-  #SIGN_IN_PATH = '/auth/signin';
+  #SIGN_IN_PATH = '/api/auth/signin';
 
-  #SIGN_UP_PATH = '/auth/signup';
+  #SIGN_UP_PATH = '/api/auth/signup';
 
-  async signUp(userData) {
-    return this._request.post(this.#SIGN_UP_PATH, userData);
+  async signUp(signUpData) {
+    return this._request.post(this.#SIGN_UP_PATH, { data: signUpData });
   }
 
   async signIn({ email, password, remember = false }) {
