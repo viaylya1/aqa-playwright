@@ -2,8 +2,8 @@
 import { test, expect } from '@playwright/test';
 import APIClient from '../../../src/client/APIClient.js';
 import { signupDataGetCars } from '../../../src/testData/positiveSignUpData.js';
-import { BRANDS_DATA } from '../../../src/testData/brands.js';
-import { MODELS_DATA } from '../../../src/testData/models.js';
+import { BRANDS } from '../../../src/testData/brands.js';
+import { MODELS } from '../../../src/testData/models.js';
 
 test.describe('GET Cars API cases', () => {
   let newUser;
@@ -20,12 +20,13 @@ test.describe('GET Cars API cases', () => {
   });
 
   test.describe('GET Brands', () => {
-    test('GET Brands positive case', async () => {
+    test('Positive case: GET Brands', async () => {
       const response = await carsController.getCarsBrands();
       expect(response.status()).toBe(200);
       const responseData = await response.json();
 
-      for (const expectedBrand of BRANDS_DATA.data) {
+      for (const brandKey of Object.keys(BRANDS)) {
+        const expectedBrand = BRANDS[brandKey];
         const foundBrand = responseData.data.find((brand) => brand.id === expectedBrand.id);
         expect(foundBrand).toBeDefined();
         expect(foundBrand.title).toBe(expectedBrand.title);
@@ -35,8 +36,9 @@ test.describe('GET Cars API cases', () => {
   });
 
   test.describe('GET Brand by id', () => {
-    test('GET Brand by id positive case', async () => {
-      const brand = BRANDS_DATA.data[1];
+    test('Positive case: GET Brand by id', async () => {
+      const brand = Object.values(BRANDS)[0];
+
       const response = await carsController.getCarBrandByID(brand.id);
       expect(response.status()).toBe(200);
       expect(await response.json()).toMatchObject({
@@ -48,7 +50,8 @@ test.describe('GET Cars API cases', () => {
         }
       });
     });
-    test('GET non-existing Brand by id (negative case)', async () => {
+
+    test('Negative case: GET non-existing Brand by id', async () => {
       const brandID = 10;
       const response = await carsController.getCarBrandByID(brandID);
 
@@ -61,36 +64,42 @@ test.describe('GET Cars API cases', () => {
   });
 
   test.describe('GET Models', () => {
-    test('GET Models positive case', async () => {
+    test('Positive case: GET Models', async () => {
       const response = await carsController.getCarsModels();
       expect(response.status()).toBe(200);
       const responseData = await response.json();
 
-      for (const expectedModel of MODELS_DATA.data) {
-        const foundModel = responseData.data.find((model) => model.id === expectedModel.id);
-        expect(foundModel).toBeDefined();
-        expect(foundModel.title).toBe(expectedModel.title);
-        expect(foundModel.logoFilename).toBe(expectedModel.logoFilename);
+      for (const models of Object.values(MODELS)) {
+        for (const model of Object.values(models)) {
+          const foundModel = responseData.data.find((m) => m.id === model.id);
+          expect(foundModel).toBeDefined();
+          expect(foundModel.title).toBe(model.title);
+          expect(foundModel.logoFilename).toBe(model.logoFilename);
+        }
       }
     });
   });
 
   test.describe('GET Model by id', () => {
-    test('GET Model by id positive case', async () => {
-      const model = MODELS_DATA.data[0];
-      const brand = BRANDS_DATA.data[0];
+    test('Positive case: GET Model by id', async () => {
+      const brandKey = Object.keys(MODELS)[0];
+      const models = MODELS[brandKey];
+      const modelKey = Object.keys(models)[0];
+      const model = models[modelKey];
+
       const response = await carsController.getCarModelByID(model.id);
       expect(response.status()).toBe(200);
       expect(await response.json()).toMatchObject({
         status: 'ok',
         data: {
           id: model.id,
-          carBrandId: brand.id,
+          carBrandId: model.carBrandId,
           title: model.title
         }
       });
     });
-    test('GET non-existing Model by id (negative case)', async () => {
+
+    test('Negative case: GET non-existing Model by id', async () => {
       const modelID = 100;
       const response = await carsController.getCarModelByID(modelID);
 

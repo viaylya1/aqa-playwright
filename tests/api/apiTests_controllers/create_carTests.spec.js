@@ -17,13 +17,17 @@ test.describe('Cars API cases', () => {
   });
 
   test.afterEach(async () => {
-    carsController = newUser.cars;
-
     const carsResponse = await carsController.getUserCars();
     const cars = await carsResponse.json();
 
     await Promise.all(
-      cars.data.map((car) => carsController.deleteCar(car.id))
+      cars.data.map(async (car) => {
+        try {
+          await carsController.deleteCar(car.id);
+        } catch (error) {
+          console.error(`Error deleting car with id ${car.id}:`, error);
+        }
+      })
     );
   });
 
@@ -33,8 +37,8 @@ test.describe('Cars API cases', () => {
     }
   });
 
-  test.describe('Create cars positive cases with Controller', () => {
-    test('create car', async () => {
+  test.describe('Create cars with Controller', () => {
+    test('Positive case: Create cars', async () => {
       const createdCarIds = [];
 
       for (const brandName of Object.keys(BRANDS)) {
@@ -67,16 +71,15 @@ test.describe('Cars API cases', () => {
             expect(response.status()).toBe(201);
             expect(body.status).toBe('ok');
             expect(body.data).toEqual(expected);
-
             expect(moment(body.data.updatedMileageAt).isAfter(startTime), 'updatedMileageAt should be valid').toBe(true);
           });
         }
       }
     });
 
-    test.describe('Create cars negative cases', () => {
+    test('Negative cases', async () => {
       for (const testCase of WRONG_DATA) {
-        test(`create a car with ${testCase.name}`, async () => {
+        await test.step(`create a car with ${testCase.name}`, async () => {
           const brand = Object.values(BRANDS)[0];
           const model = Object.values(MODELS[brand.id])[0];
           const response = await carsController.createCar(testCase.requestBody(brand, model));
