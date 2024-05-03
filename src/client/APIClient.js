@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { request } from '@playwright/test';
 import CarController from '../controllers/CarsController.js';
 import AuthController from '../controllers/AuthController.js';

@@ -32,7 +32,7 @@ export const signupDataGetUserCars = {
 
 export const signupDataCreateCarsMain = {
   name: 'Get',
-  lastName: 'UserCarsMain',
+  lastName: 'UserCarsCreateMain',
   email: 'aqa-create-user-cars-main@test.com',
   password: 'Test1Test',
   repeatPassword: 'Test1Test'
@@ -40,8 +40,24 @@ export const signupDataCreateCarsMain = {
 
 export const signupDataCreateCars = {
   name: 'Get',
-  lastName: 'UserCars',
+  lastName: 'UserCarsCreate',
   email: 'aqa-create-user-cars@test.com',
+  password: 'Test1Test',
+  repeatPassword: 'Test1Test'
+};
+
+export const signupDataDeleteCars = {
+  name: 'Get',
+  lastName: 'UserCarsDelete',
+  email: 'aqa-delete-user-cars@test.com',
+  password: 'Test1Test',
+  repeatPassword: 'Test1Test'
+};
+
+export const signupDataUpdateCars = {
+  name: 'Get',
+  lastName: 'UserCarsUpdate',
+  email: 'aqa-update-user-cars@test.com',
   password: 'Test1Test',
   repeatPassword: 'Test1Test'
 };

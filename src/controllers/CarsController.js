@@ -24,7 +24,7 @@ export default class CarController extends BaseController {
   }
 
   async updateCar(id, newData) {
-    return this._request.put(this.#UPDATE_CAR_PATH.replace('#', id), newData);
+    return this._request.put(this.#UPDATE_CAR_PATH.replace('#', id), { data: newData });
   }
 
   async deleteCar(id) {

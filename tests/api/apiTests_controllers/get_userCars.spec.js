@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import moment from 'moment';
 import APIClient from '../../../src/client/APIClient.js';
 import { signupDataGetUserCars } from '../../../src/testData/positiveSignUpData.js';
+import { invalidCredentials } from '../../../src/testData/negativeSignInData.js';
 import { BRANDS } from '../../../src/testData/brands.js';
 import { MODELS } from '../../../src/testData/models.js';
 
@@ -70,7 +71,6 @@ test.describe('GET Users Cars API cases', () => {
     });
 
     test('GET Current user cars with invalid authentication (negative case)', async () => {
-      const invalidCredentials = { email: 'invalidEmail@gmail.com', password: 'invalidPassword' };
       const invalidClient = await APIClient.authenticate(invalidCredentials);
       const response = await invalidClient.cars.getUserCars();
 
@@ -95,7 +95,6 @@ test.describe('GET Users Cars API cases', () => {
 
   test.describe('GET Current user cars by id (negative cases)', () => {
     test('GET Current user cars by invalid authentication', async () => {
-      const invalidCredentials = { email: 'invalidEmail@gmail.com', password: 'invalidPassword' };
       const invalidClient = await APIClient.authenticate(invalidCredentials);
 
       const carID = createdCarIds[0];
