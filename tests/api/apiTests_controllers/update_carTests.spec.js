@@ -4,8 +4,8 @@ import moment from 'moment';
 import APIClient from '../../../src/client/APIClient.js';
 import { signupDataUpdateCars } from '../../../src/testData/positiveSignUpData.js';
 import { invalidCredentials } from '../../../src/testData/negativeSignInData.js';
-import { BRANDS_DATA } from '../../../src/testData/brands.js';
-import { MODELS_DATA } from '../../../src/testData/models.js';
+import { BRANDS } from '../../../src/testData/brands.js';
+import { MODELS } from '../../../src/testData/models.js';
 import { createCar } from './testHelpers.js';
 
 test.describe('UPDATE Cars API cases', () => {
@@ -33,8 +33,11 @@ test.describe('UPDATE Cars API cases', () => {
   test.describe('UPDATE Cars', () => {
     test('Positive case: UPDATE Car by id', async () => {
       updateCarId = createdCarsData.data.id;
-      [updatedBrand] = BRANDS_DATA.data.slice(1);
-      [updatedModel] = MODELS_DATA.data.slice(6);
+
+      updatedBrand = BRANDS.BMW;
+      const audiModels = MODELS[updatedBrand.id];
+      const modelKeys = Object.keys(audiModels);
+      updatedModel = audiModels[modelKeys[0]];
 
       updatedCarData = {
         carBrandId: updatedBrand.id,

@@ -54,15 +54,14 @@ export async function createCar(newUser) {
 
   const carsController = newUser.cars;
 
-  const brandKeys = Object.keys(BRANDS);
-  const randomBrand = BRANDS[brandKeys[Math.floor(Math.random() * brandKeys.length)]];
-
-  const modelKeys = Object.keys(MODELS[randomBrand.id]);
-  const randomModel = MODELS[randomBrand.id][modelKeys[Math.floor(Math.random() * modelKeys.length)]];
+  const brand = BRANDS.Audi;
+  const audiModels = MODELS[brand.id];
+  const modelKeys = Object.keys(audiModels);
+  const model = audiModels[modelKeys[0]];
 
   const carData = {
-    carBrandId: randomBrand.id,
-    carModelId: randomModel.id,
+    carBrandId: brand.id,
+    carModelId: model.id,
     mileage: 10
   };
 
@@ -77,9 +76,9 @@ export async function createCar(newUser) {
     updatedMileageAt: expect.any(String),
     carCreatedAt: expect.any(String),
     mileage: carData.mileage,
-    brand: randomBrand.title,
-    model: randomModel.title,
-    logo: randomBrand.logoFilename
+    brand: brand.title,
+    model: model.title,
+    logo: brand.logoFilename
   };
 
   expect(createCarResponse.status()).toBe(201);
