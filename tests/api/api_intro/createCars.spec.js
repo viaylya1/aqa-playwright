@@ -4,7 +4,7 @@ import { BRANDS } from '../../../src/testData/brands.js';
 import { WRONG_DATA } from '../../../src/testData/negativeCarsCreationData.js';
 
 loggedAsAqa.describe('Cars API cases', () => {
-  loggedAsAqa.describe('Create cars positive cases', () => {
+  loggedAsAqa.describe('Positive cases: Create cars', () => {
     const createdCarIds = [];
     loggedAsAqa('create car', async ({ request }) => {
       for (const brandName of Object.keys(BRANDS)) {
@@ -50,7 +50,7 @@ loggedAsAqa.describe('Cars API cases', () => {
     });
   });
 
-  loggedAsAqa.describe('Create cars negative cases', () => {
+  loggedAsAqa.describe('Negative cases: Create cars', () => {
     for (const testCase of WRONG_DATA) {
       loggedAsAqa(`create a car with ${testCase.name}`, async ({ request }) => {
         const brand = Object.values(BRANDS)[0];

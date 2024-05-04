@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { test as base, expect as baseExpect, request as baseRequest } from '@playwright/test';
 import WelcomePage from '../pageObjects/WelcomePage/WelcomePage.js';
 import GaragePage from '../pageObjects/UserPage/GaragePage.js';
