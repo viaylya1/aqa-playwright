@@ -6,7 +6,7 @@ import {
 } from '../../src/testData/negativeSignUpData.js';
 import WelcomePage from '../../src/pageObjects/WelcomePage/WelcomePage.js';
 
-test.describe.only('Auth', () => {
+test.describe('Auth', () => {
   let welcomePage;
   let garagePage;
   let signUpPopup;
@@ -37,7 +37,6 @@ test.describe.only('Auth', () => {
       await expect(signUpPopup.invalidFields).toBeHidden();
       // await expect(signUpPopup.container).toHaveScreenshot('Sign up popup.png');
       await expect(signUpPopup.container).toHaveScreenshot('registrationForm_WithPOM.spec.js-snapshots/Sign_up_popup.png');
-      
 
       garagePage = await signUpPopup.register();
       await expect(page).toHaveURL('/panel/garage');
