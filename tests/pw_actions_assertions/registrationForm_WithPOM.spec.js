@@ -35,7 +35,11 @@ test.describe('Auth', () => {
       }
 
       await expect(signUpPopup.invalidFields).toBeHidden();
-      await expect(signUpPopup.container).toHaveScreenshot('Sign up popup.png');
+      // await expect(signUpPopup.container).toHaveScreenshot('Sign up popup.png');
+         await expect(signUpPopup.container).toMatchSnapshot({
+            name: 'Sign up popup.png', 
+            threshold: 0.02,
+        });
 
       garagePage = await signUpPopup.register();
       await expect(page).toHaveURL('/panel/garage');
@@ -170,6 +174,7 @@ test.describe('Auth', () => {
             if (fieldName === 'longValue') {
               await expect(signUpPopup.container).toHaveScreenshot('Invalid password.png');
             }
+
 
             await expect(signUpPopup.registerBtn).toBeDisabled();
             await signUpPopup.passwordField.clear();
