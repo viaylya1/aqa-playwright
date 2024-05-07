@@ -6,7 +6,7 @@ import {
 } from '../../src/testData/negativeSignUpData.js';
 import WelcomePage from '../../src/pageObjects/WelcomePage/WelcomePage.js';
 
-test.describe.only('Auth', () => {
+test.describe('Auth', () => {
   let welcomePage;
   let garagePage;
   let signUpPopup;
