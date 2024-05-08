@@ -62,14 +62,16 @@ jobs:
           HTTP_CREDENTIALS_USERNAME: ${{secrets.HTTP_CREDENTIALS_USERNAME}}
           HTTP_CREDENTIALS_PASSWORD: ${{secrets.HTTP_CREDENTIALS_PASSWORD}}
         run: npx playwright test --update-snapshots
-      - name: Adding snapshots to the repository
+      - name: Git config
         run: |
           git config --global --add safe.directory /__w/aqa-playwright/aqa-playwright
-          git config --global user.email "viaylya@gmail.com"
-          git config --global user.name "Viktoriia Bryzhak"
-          git add .
-          git commit -m "Added snapshots"
-          git push
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+      - name: Push snapshots to the repository
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
       - name: "Run tests"
         env:
           BASE_URL: 'https://qauto.forstudy.space/'
