@@ -55,23 +55,6 @@ jobs:
           node-version: 20
       - name: "Install dependencies"
         run: npm ci
-      - name: "Generate Screenshots"
-        env:
-          BASE_URL: 'https://qauto.forstudy.space/'
-          API_URL: 'https://api.qauto.forstudy.space/'
-          HTTP_CREDENTIALS_USERNAME: ${{secrets.HTTP_CREDENTIALS_USERNAME}}
-          HTTP_CREDENTIALS_PASSWORD: ${{secrets.HTTP_CREDENTIALS_PASSWORD}}
-        run: npx playwright test --update-snapshots
-      - name: Git config
-        run: |
-          git config --global --add safe.directory /__w/aqa-playwright/aqa-playwright
-          git config user.name github-actions[bot]
-          git config user.email github-actions[bot]@users.noreply.github.com
-      - name: Push snapshots to the repository
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
       - name: "Run tests"
         env:
           BASE_URL: 'https://qauto.forstudy.space/'
