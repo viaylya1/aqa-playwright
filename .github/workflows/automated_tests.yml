@@ -69,7 +69,7 @@ jobs:
           git config --global user.name "Viktoriia Bryzhak"
           git add .
           git commit -m "Added snapshots"
-          git push origin/ci_cd
+          git push
       - name: "Run tests"
         env:
           BASE_URL: 'https://qauto.forstudy.space/'
