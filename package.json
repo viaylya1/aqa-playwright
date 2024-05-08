@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": " npx playwright test --project=chromium",
-    "test:ui": " npx playwright test --ui --project=chromium",
+    "test:e2e": " npx playwright test --project=\"E2E tests\"",
+    "test:ui": " npx playwright test --ui --project=\"E2E tests\"",
     "test:api": "npx playwright test --project=\"API tests\"",
     "lint": "npx eslint --fix ."
   },
