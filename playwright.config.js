@@ -52,8 +52,9 @@ const config = defineConfig({
       testMatch: /tests\/setup\/.*\/*.setup.js/
     },
     {
-      name: 'chromium',
+      name: 'E2E tests',
       use: { ...devices['Desktop Chrome'] },
+      testMatch: /tests\/(?!api).*\.spec\.js$/,
       dependencies: ['setup']
     },
     {
