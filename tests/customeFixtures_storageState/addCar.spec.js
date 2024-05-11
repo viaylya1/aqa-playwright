@@ -1,7 +1,7 @@
 import { loggedAsAqa, expect } from '../../src/fixtures/userGaragePage.js';
 
 loggedAsAqa.describe('Add a new car', () => {
-  loggedAsAqa('should add a new car', async ({ garagePage }) => {
+  loggedAsAqa('C4025: should add a new car', async ({ garagePage }) => {
     await expect(garagePage.addCarButton).toBeVisible();
     const addCarPopup = await garagePage.openAddCarPopup();
     const brand = 'BMW';
