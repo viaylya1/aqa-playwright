@@ -31,6 +31,7 @@ const config = defineConfig({
     [
       process.env.CI ? 'github' : 'list'
     ]
+    // ['playwright-testrail-reporter']
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
